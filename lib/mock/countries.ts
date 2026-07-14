@@ -1,8 +1,9 @@
 import { CountryInfo } from "@/types";
+import { WORLD_COUNTRIES } from "./countriesWorld";
 
-// v1: 東南アジア〜南アジア中心に先行投入(設計書15章「初期投入する国データの範囲」を参照)
-// code は countries.geo.json の feature.id (ISO3) と一致させる
-export const COUNTRIES: CountryInfo[] = [
+// v1: 東南アジア〜南アジアは詳細キュレーション済み。それ以外は countriesWorld.ts で
+// 地域別の物価感覚(ホテル/食事/観光を円換算)を含めて全世界カバーしている(設計書15章)。
+export const CURATED_COUNTRIES: CountryInfo[] = [
   {
     code: "JPN",
     code2: "JP",
@@ -14,6 +15,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "日本語",
     safetyLevel: 1,
     costIndex: 70,
+    priceSenseJPY: { hotel: 8000, food: 800, sightseeing: 500 },
     visaForJapanese: "unnecessary",
     visaDetail: { maxStayDays: 0, notes: "自国" },
     currency: { code: "JPY", symbol: "¥" },
@@ -39,6 +41,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "タイ語",
     safetyLevel: 2,
     costIndex: 30,
+    priceSenseJPY: { hotel: 1200, food: 150, sightseeing: 100 },
     visaForJapanese: "unnecessary",
     visaDetail: { maxStayDays: 30, notes: "観光目的30日間ビザ免除" },
     currency: { code: "THB", symbol: "฿" },
@@ -64,6 +67,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "ラオス語",
     safetyLevel: 2,
     costIndex: 22,
+    priceSenseJPY: { hotel: 800, food: 120, sightseeing: 100 },
     visaForJapanese: "voa",
     visaDetail: { maxStayDays: 30, notes: "到着ビザ 約35USD" },
     currency: { code: "LAK", symbol: "₭" },
@@ -89,6 +93,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "ベトナム語",
     safetyLevel: 2,
     costIndex: 25,
+    priceSenseJPY: { hotel: 700, food: 100, sightseeing: 100 },
     visaForJapanese: "unnecessary",
     visaDetail: { maxStayDays: 45, notes: "観光目的45日間ビザ免除" },
     currency: { code: "VND", symbol: "₫" },
@@ -114,6 +119,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "クメール語",
     safetyLevel: 2,
     costIndex: 24,
+    priceSenseJPY: { hotel: 1000, food: 150, sightseeing: 200 },
     visaForJapanese: "e-visa",
     visaDetail: { maxStayDays: 30, notes: "E-visa 約36USD、事前オンライン申請" },
     currency: { code: "USD", symbol: "$" },
@@ -139,6 +145,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "ビルマ語",
     safetyLevel: 4,
     costIndex: 20,
+    priceSenseJPY: { hotel: 800, food: 100, sightseeing: 150 },
     visaForJapanese: "e-visa",
     visaDetail: { maxStayDays: 28, notes: "情勢不安あり渡航は要最新確認" },
     currency: { code: "MMK", symbol: "K" },
@@ -164,6 +171,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "マレー語",
     safetyLevel: 2,
     costIndex: 32,
+    priceSenseJPY: { hotel: 2500, food: 300, sightseeing: 300 },
     visaForJapanese: "unnecessary",
     visaDetail: { maxStayDays: 90, notes: "観光目的90日間ビザ免除" },
     currency: { code: "MYR", symbol: "RM" },
@@ -189,6 +197,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "英語/中国語/マレー語",
     safetyLevel: 1,
     costIndex: 85,
+    priceSenseJPY: { hotel: 8000, food: 600, sightseeing: 800 },
     visaForJapanese: "unnecessary",
     visaDetail: { maxStayDays: 30, notes: "観光目的30日間ビザ免除" },
     currency: { code: "SGD", symbol: "S$" },
@@ -214,6 +223,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "インドネシア語",
     safetyLevel: 2,
     costIndex: 28,
+    priceSenseJPY: { hotel: 1200, food: 150, sightseeing: 150 },
     visaForJapanese: "eta",
     visaDetail: { maxStayDays: 30, notes: "ETA/到着時電子申請" },
     currency: { code: "IDR", symbol: "Rp" },
@@ -239,6 +249,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "フィリピノ語/英語",
     safetyLevel: 3,
     costIndex: 27,
+    priceSenseJPY: { hotel: 1500, food: 200, sightseeing: 150 },
     visaForJapanese: "unnecessary",
     visaDetail: { maxStayDays: 30, notes: "観光目的30日間ビザ免除" },
     currency: { code: "PHP", symbol: "₱" },
@@ -264,6 +275,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "ヒンディー語/英語",
     safetyLevel: 3,
     costIndex: 18,
+    priceSenseJPY: { hotel: 800, food: 100, sightseeing: 50 },
     visaForJapanese: "e-visa",
     visaDetail: { maxStayDays: 30, notes: "E-visa事前申請必須" },
     currency: { code: "INR", symbol: "₹" },
@@ -289,6 +301,7 @@ export const COUNTRIES: CountryInfo[] = [
     language: "ネパール語",
     safetyLevel: 2,
     costIndex: 16,
+    priceSenseJPY: { hotel: 700, food: 150, sightseeing: 100 },
     visaForJapanese: "voa",
     visaDetail: { maxStayDays: 30, notes: "到着ビザ 約30USD" },
     currency: { code: "NPR", symbol: "₨" },
@@ -304,6 +317,8 @@ export const COUNTRIES: CountryInfo[] = [
     lastUpdated: "2026-07-01",
   },
 ];
+
+export const COUNTRIES: CountryInfo[] = [...CURATED_COUNTRIES, ...WORLD_COUNTRIES];
 
 export const COUNTRY_BY_CODE: Record<string, CountryInfo> = Object.fromEntries(
   COUNTRIES.map((c) => [c.code, c])

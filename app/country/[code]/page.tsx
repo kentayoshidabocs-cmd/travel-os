@@ -38,6 +38,12 @@ export default async function CountryDetailPage({
         <Row label="通貨" value={`${country.currency.code} (${country.currency.symbol})`} />
       </Section>
 
+      <Section title="物価感覚(現地の人の目安・円換算)">
+        <Row label="宿(1泊)" value={`¥${country.priceSenseJPY.hotel.toLocaleString()}`} />
+        <Row label="食事(1食)" value={`¥${country.priceSenseJPY.food.toLocaleString()}`} />
+        <Row label="観光地入場料" value={`¥${country.priceSenseJPY.sightseeing.toLocaleString()}`} />
+      </Section>
+
       <Section title="SIM / eSIM">
         <Row label="入手性" value={country.sim.availability} />
         <Row label="目安料金" value={`$${country.sim.avgPriceUSD}`} />

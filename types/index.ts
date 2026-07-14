@@ -21,7 +21,12 @@ export interface CountryInfo {
   plugType: string;
   language: string;
   safetyLevel: SafetyLevel;
-  costIndex: number; // 0(安い)〜100(高い)
+  costIndex: number; // 0(安い)〜100(高い) 地図のグラデーション用
+  priceSenseJPY: {
+    hotel: number; // 現地の人が普通に泊まる宿1泊(円換算)
+    food: number; // 地元の食堂での1食(円換算)
+    sightseeing: number; // 観光地の入場料目安(円換算)
+  };
   visaForJapanese: VisaCategory;
   visaDetail: {
     maxStayDays: number;

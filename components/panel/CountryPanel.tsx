@@ -71,7 +71,9 @@ export function CountryPanel() {
             <Row label="タイムゾーン" value={country.timezone} />
             <Row label="電源プラグ" value={country.plugType} />
             <Row label="治安レベル" value={`${country.safetyLevel} / 4`} />
-            <Row label="物価指数" value={`${country.costIndex} / 100`} />
+            <Row label="宿(1泊)の目安" value={`¥${country.priceSenseJPY.hotel.toLocaleString()}`} />
+            <Row label="食事(1食)の目安" value={`¥${country.priceSenseJPY.food.toLocaleString()}`} />
+            <Row label="観光地入場料の目安" value={`¥${country.priceSenseJPY.sightseeing.toLocaleString()}`} />
             <Row
               label="ビザ(日本人)"
               value={
