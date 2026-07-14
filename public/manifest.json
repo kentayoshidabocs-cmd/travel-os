@@ -1,0 +1,12 @@
+{
+  "name": "Travel OS",
+  "short_name": "TravelOS",
+  "description": "世界一周バックパッカーのためのTravel OS",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    { "src": "/globe.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
