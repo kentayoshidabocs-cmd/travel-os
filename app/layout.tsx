@@ -5,6 +5,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { GlobalNav } from "@/components/nav/GlobalNav";
 import { EmergencyButton } from "@/components/emergency/EmergencyButton";
 import { EmergencyOverlay } from "@/components/emergency/EmergencyOverlay";
+import { AuthGate } from "@/lib/auth/AuthGate";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,12 +41,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="h-full flex flex-col md:flex-row overflow-hidden">
-        <GlobalNav />
-        <main className="flex-1 min-h-0 flex flex-col relative pb-16 md:pb-0">
-          {children}
-        </main>
-        <EmergencyButton />
-        <EmergencyOverlay />
+        <AuthGate>
+          <GlobalNav />
+          <main className="flex-1 min-h-0 flex flex-col relative pb-16 md:pb-0">
+            {children}
+          </main>
+          <EmergencyButton />
+          <EmergencyOverlay />
+        </AuthGate>
       </body>
     </html>
   );
