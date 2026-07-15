@@ -39,16 +39,26 @@ function costColor(costIndex: number): string {
   return `hsl(${hue}, 70%, 45%)`;
 }
 
-function buildColorExpression(mode: MapLayerMode): maplibregl.ExpressionSpecification {
+const UNVISITED_GRAY = "#9ca3af";
+
+// showVisited時は訪問済み国以外をグレースケールにして、訪問済みだけを際立たせる。
+function buildColorExpression(
+  mode: MapLayerMode,
+  visitedCodes: string[],
+  showVisited: boolean
+): maplibregl.ExpressionSpecification {
+  const visitedSet = new Set(visitedCodes);
   const match: unknown[] = ["match", ["get", "iso3"]];
   for (const c of COUNTRIES) {
     let color: string;
-    if (mode === "safety") color = SAFETY_COLORS[c.safetyLevel];
+    if (showVisited && !visitedSet.has(c.code)) {
+      color = UNVISITED_GRAY;
+    } else if (mode === "safety") color = SAFETY_COLORS[c.safetyLevel];
     else if (mode === "visa") color = VISA_COLORS[c.visaForJapanese];
     else color = costColor(c.costIndex);
     match.push(c.code, color);
   }
-  match.push("#d4d4d8"); // デフォルト(データ未投入国)
+  match.push(showVisited ? UNVISITED_GRAY : "#d4d4d8"); // デフォルト(データ未投入国)
   return match as unknown as maplibregl.ExpressionSpecification;
 }
 
@@ -93,7 +103,11 @@ export function WorldMap() {
         type: "fill",
         source: "countries",
         paint: {
-          "fill-color": buildColorExpression(mapLayerMode),
+          "fill-color": buildColorExpression(
+            mapLayerMode,
+            useVisitedCountriesStore.getState().visitedCodes,
+            useAppStore.getState().showVisitedOverlay
+          ),
           "fill-opacity": 0.65,
         },
       });
@@ -139,18 +153,18 @@ export function WorldMap() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // レイヤーモード切替時に色を再計算
+  // レイヤーモード/訪問済み国/表示ON-OFFの変更を塗り分けに反映
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !map.getLayer("app-countries-fill")) return;
     map.setPaintProperty(
       "app-countries-fill",
       "fill-color",
-      buildColorExpression(mapLayerMode)
+      buildColorExpression(mapLayerMode, visitedCodes, showVisitedOverlay)
     );
-  }, [mapLayerMode]);
+  }, [mapLayerMode, visitedCodes, showVisitedOverlay]);
 
-  // 訪問済み国リスト/表示ON-OFFの変更を地図に反映
+  // 訪問済み国リスト/表示ON-OFFの変更を縁取りにも反映
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !map.getLayer("app-visited-outline")) return;
