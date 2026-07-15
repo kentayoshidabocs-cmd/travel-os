@@ -39,7 +39,7 @@ export function CountryPanel() {
       className="
         fixed z-30 bg-white dark:bg-neutral-900 shadow-2xl
         inset-x-0 bottom-0 rounded-t-2xl max-h-[75vh]
-        md:inset-y-0 md:right-0 md:left-auto md:w-[400px] md:rounded-none md:max-h-none
+        md:top-16 md:bottom-0 md:right-0 md:left-auto md:w-[400px] md:rounded-none md:max-h-none
         flex flex-col
       "
     >
