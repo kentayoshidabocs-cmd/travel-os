@@ -40,7 +40,11 @@ function build(s: CountrySeed): CountryInfo {
     costIndex: p.costIndex,
     priceSenseJPY: { hotel: p.hotel, food: p.food, sightseeing: p.sightseeing },
     visaForJapanese: s.visaForJapanese,
-    visaDetail: { maxStayDays: s.maxStayDays, notes: s.visaNote },
+    visaDetail: {
+      maxStayDays: s.maxStayDays,
+      // ビザ不要の国は「ビザなし◯◯日以内」に表記を統一する
+      notes: s.visaForJapanese === "unnecessary" ? `ビザなし${s.maxStayDays}日以内` : s.visaNote,
+    },
     currency: { code: s.currencyCode, symbol: s.currencySymbol },
     emergency: {
       police: s.police,
@@ -228,7 +232,7 @@ const SEEDS: CountrySeed[] = [
   { code: "TTO", code2: "TT", nameJa: "トリニダード・トバゴ", nameEn: "Trinidad and Tobago", capital: "ポートオブスペイン", timezone: "UTC-4", plugType: "A/B", language: "英語", safetyLevel: 2, tier: "mid", visaForJapanese: "unnecessary", maxStayDays: 90, visaNote: "90日間ビザ免除", currencyCode: "TTD", currencySymbol: "$", police: "999", ambulance: "811" },
   { code: "USA", code2: "US", nameJa: "アメリカ合衆国", nameEn: "United States of America", capital: "ワシントンD.C.", timezone: "UTC-5〜-10", plugType: "A/B", language: "英語", safetyLevel: 2, tier: "high", visaForJapanese: "eta", maxStayDays: 90, visaNote: "ESTA電子渡航認証事前取得", currencyCode: "USD", currencySymbol: "$", police: "911", ambulance: "911" },
   { code: "URY", code2: "UY", nameJa: "ウルグアイ", nameEn: "Uruguay", capital: "モンテビデオ", timezone: "UTC-3", plugType: "C/F/L", language: "スペイン語", safetyLevel: 1, tier: "mid", visaForJapanese: "unnecessary", maxStayDays: 90, visaNote: "90日間ビザ免除", currencyCode: "UYU", currencySymbol: "$", police: "911", ambulance: "105" },
-  { code: "VEN", code2: "VE", nameJa: "ベネズエラ", nameEn: "Venezuela", capital: "カラカス", timezone: "UTC-4", plugType: "A/B", language: "スペイン語", safetyLevel: 3, tier: "low", visaForJapanese: "visa_required", maxStayDays: 0, visaNote: "治安・経済情勢に要注意", currencyCode: "VES", currencySymbol: "Bs", police: "911", ambulance: "911" },
+  { code: "VEN", code2: "VE", nameJa: "ベネズエラ", nameEn: "Venezuela", capital: "カラカス", timezone: "UTC-4", plugType: "A/B", language: "スペイン語", safetyLevel: 3, tier: "low", visaForJapanese: "unnecessary", maxStayDays: 90, visaNote: "治安・経済情勢に要注意。ビザは不要だが渡航は要最新確認", currencyCode: "VES", currencySymbol: "Bs", police: "911", ambulance: "911" },
   { code: "FLK", code2: "FK", nameJa: "フォークランド諸島", nameEn: "Falkland Islands", capital: "スタンリー", timezone: "UTC-3", plugType: "G", language: "英語", safetyLevel: 1, tier: "high", visaForJapanese: "unnecessary", maxStayDays: 90, visaNote: "英領、90日間ビザ免除", currencyCode: "FKP", currencySymbol: "£", police: "999", ambulance: "999" },
   { code: "GRL", code2: "GL", nameJa: "グリーンランド", nameEn: "Greenland", capital: "ヌーク", timezone: "UTC-3", plugType: "C/E/K", language: "デンマーク語/グリーンランド語", safetyLevel: 1, tier: "very_high", visaForJapanese: "unnecessary", maxStayDays: 90, visaNote: "デンマーク領、90日間ビザ免除", currencyCode: "DKK", currencySymbol: "kr", police: "112", ambulance: "112" },
 ];

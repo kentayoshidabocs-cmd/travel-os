@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import maplibregl, { Map as MLMap } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useAppStore } from "@/lib/store/useAppStore";
+import { useVisitedCountriesStore } from "@/lib/store/useVisitedCountriesStore";
 import { COUNTRIES } from "@/lib/mock/countries";
 import { MapLayerMode, SafetyLevel, VisaCategory } from "@/types";
 
@@ -56,6 +57,8 @@ export function WorldMap() {
   const mapRef = useRef<MLMap | null>(null);
   const mapLayerMode = useAppStore((s) => s.mapLayerMode);
   const selectCountry = useAppStore((s) => s.selectCountry);
+  const showVisitedOverlay = useAppStore((s) => s.showVisitedOverlay);
+  const visitedCodes = useVisitedCountriesStore((s) => s.visitedCodes);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -102,6 +105,16 @@ export function WorldMap() {
         paint: { "line-color": "#ffffff", "line-width": 0.5 },
       });
 
+      // 訪問済み国のハイライト表示。危険度/物価/ビザのレイヤーとは独立して重ね描画する。
+      map.addLayer({
+        id: "app-visited-outline",
+        type: "line",
+        source: "countries",
+        filter: ["in", ["get", "iso3"], ["literal", useVisitedCountriesStore.getState().visitedCodes]],
+        paint: { "line-color": "#f59e0b", "line-width": 3 },
+        layout: { visibility: useAppStore.getState().showVisitedOverlay ? "visible" : "none" },
+      });
+
       map.on("click", "app-countries-fill", (e) => {
         const code = e.features?.[0]?.properties?.iso3 as string | undefined;
         if (code) selectCountry(code);
@@ -136,6 +149,14 @@ export function WorldMap() {
       buildColorExpression(mapLayerMode)
     );
   }, [mapLayerMode]);
+
+  // 訪問済み国リスト/表示ON-OFFの変更を地図に反映
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !map.getLayer("app-visited-outline")) return;
+    map.setFilter("app-visited-outline", ["in", ["get", "iso3"], ["literal", visitedCodes]]);
+    map.setLayoutProperty("app-visited-outline", "visibility", showVisitedOverlay ? "visible" : "none");
+  }, [visitedCodes, showVisitedOverlay]);
 
   // MapLibreは渡したコンテナに inline style position:relative を強制設定するため、
   // Tailwindの absolute/inset-0 を直接同じ要素につけると無効化される。ラッパーで包む。

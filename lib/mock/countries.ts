@@ -43,7 +43,7 @@ export const CURATED_COUNTRIES: CountryInfo[] = [
     costIndex: 30,
     priceSenseJPY: { hotel: 1200, food: 150, sightseeing: 100 },
     visaForJapanese: "unnecessary",
-    visaDetail: { maxStayDays: 30, notes: "観光目的30日間ビザ免除" },
+    visaDetail: { maxStayDays: 30, notes: "ビザなし30日以内" },
     currency: { code: "THB", symbol: "฿" },
     emergency: {
       police: "191",
@@ -95,7 +95,7 @@ export const CURATED_COUNTRIES: CountryInfo[] = [
     costIndex: 25,
     priceSenseJPY: { hotel: 700, food: 100, sightseeing: 100 },
     visaForJapanese: "unnecessary",
-    visaDetail: { maxStayDays: 45, notes: "観光目的45日間ビザ免除" },
+    visaDetail: { maxStayDays: 45, notes: "ビザなし45日以内" },
     currency: { code: "VND", symbol: "₫" },
     emergency: {
       police: "113",
@@ -173,7 +173,7 @@ export const CURATED_COUNTRIES: CountryInfo[] = [
     costIndex: 32,
     priceSenseJPY: { hotel: 2500, food: 300, sightseeing: 300 },
     visaForJapanese: "unnecessary",
-    visaDetail: { maxStayDays: 90, notes: "観光目的90日間ビザ免除" },
+    visaDetail: { maxStayDays: 90, notes: "ビザなし90日以内" },
     currency: { code: "MYR", symbol: "RM" },
     emergency: {
       police: "999",
@@ -199,7 +199,7 @@ export const CURATED_COUNTRIES: CountryInfo[] = [
     costIndex: 85,
     priceSenseJPY: { hotel: 8000, food: 600, sightseeing: 800 },
     visaForJapanese: "unnecessary",
-    visaDetail: { maxStayDays: 30, notes: "観光目的30日間ビザ免除" },
+    visaDetail: { maxStayDays: 30, notes: "ビザなし30日以内" },
     currency: { code: "SGD", symbol: "S$" },
     emergency: {
       police: "999",
@@ -251,7 +251,7 @@ export const CURATED_COUNTRIES: CountryInfo[] = [
     costIndex: 27,
     priceSenseJPY: { hotel: 1500, food: 200, sightseeing: 150 },
     visaForJapanese: "unnecessary",
-    visaDetail: { maxStayDays: 30, notes: "観光目的30日間ビザ免除" },
+    visaDetail: { maxStayDays: 30, notes: "ビザなし30日以内" },
     currency: { code: "PHP", symbol: "₱" },
     emergency: {
       police: "117",

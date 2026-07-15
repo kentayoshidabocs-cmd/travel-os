@@ -12,6 +12,9 @@ interface AppState {
   setEmergencyOpen: (open: boolean) => void;
 
   currentCountryCode: string; // 現在地(モック: バンコク=THA)
+
+  showVisitedOverlay: boolean; // 訪問済み国のハイライト表示(他レイヤーと独立)
+  setShowVisitedOverlay: (show: boolean) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -25,4 +28,7 @@ export const useAppStore = create<AppState>((set) => ({
   setEmergencyOpen: (open) => set({ emergencyOpen: open }),
 
   currentCountryCode: "THA",
+
+  showVisitedOverlay: true,
+  setShowVisitedOverlay: (show) => set({ showVisitedOverlay: show }),
 }));

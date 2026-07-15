@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { X, ExternalLink } from "lucide-react";
+import { X, ExternalLink, Check } from "lucide-react";
 import { useAppStore } from "@/lib/store/useAppStore";
+import { useVisitedCountriesStore } from "@/lib/store/useVisitedCountriesStore";
 import { COUNTRY_BY_CODE } from "@/lib/mock/countries";
 import { findNeighborRoutes } from "@/lib/mock/neighborRoutes";
 import { CurrencyConverter } from "./CurrencyConverter";
@@ -21,6 +22,8 @@ export function CountryPanel() {
   const notes = useNotesStore((s) => s.notes);
   const addNote = useNotesStore((s) => s.addNote);
   const [draft, setDraft] = useState("");
+  const isVisited = useVisitedCountriesStore((s) => s.isVisited);
+  const toggleVisited = useVisitedCountriesStore((s) => s.toggleVisited);
 
   const country = selectedCountryCode ? COUNTRY_BY_CODE[selectedCountryCode] : null;
   const neighborRoutes = useMemo(
@@ -40,8 +43,19 @@ export function CountryPanel() {
         flex flex-col
       "
     >
-      <div className="flex items-center justify-between p-4 border-b border-black/10 dark:border-white/10">
-        <h2 className="text-lg font-bold">{country.nameJa}</h2>
+      <div className="flex items-center justify-between p-4 border-b border-black/10 dark:border-white/10 gap-2">
+        <h2 className="text-lg font-bold flex-1">{country.nameJa}</h2>
+        <button
+          onClick={() => toggleVisited(country.code)}
+          className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium border ${
+            isVisited(country.code)
+              ? "bg-amber-500 border-amber-500 text-white"
+              : "border-black/20 dark:border-white/20 text-black/50 dark:text-white/50"
+          }`}
+        >
+          <Check size={14} />
+          {isVisited(country.code) ? "訪問済み" : "訪問済みにする"}
+        </button>
         <button onClick={() => selectCountry(null)} aria-label="閉じる">
           <X />
         </button>
